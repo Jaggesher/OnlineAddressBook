@@ -15,6 +15,9 @@ namespace OnlineAddressBook.Data
         {
         }
 
+        public DbSet<People> People { get; set; }
+        public DbSet<Phone> Phone { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
