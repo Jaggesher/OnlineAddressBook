@@ -30,11 +30,12 @@ namespace OnlineAddressBook.Controllers
         public IActionResult AddContact(PeopleViewModel model)
         {
             
-            return Json(model);
+            //return Json(model);
 
             if(!ModelState.IsValid){
                return BadRequest(ModelState);
             }
+            
 
            return  Redirect ("AddContact");
 
