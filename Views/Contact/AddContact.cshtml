@@ -12,7 +12,7 @@
             <div class="panel-heading">Add a new contact.</div>
             <div class="panel-body">
                 
-                <form  method="post">   
+                <form asp-controller="Contact" asp-action="AddContact"  method="post">   
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="FullName"></label>
@@ -42,7 +42,25 @@
                         <input asp-for="WebSite" class="form-control" />
                         <span asp-validation-for="WebSite" class="text-danger"></span>
                     </div>
+                    
+                    <div id="MultiplePhones">
+                        <div class="form-group">
+                            <label asp-for="Phones[0].Phone"></label>
+                            <input asp-for="Phones[0].Phone" class="form-control" />
+                            <span asp-validation-for="Phones[0].Phone" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        
+                        <button id="AddAnotherPhone" type="button" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-ok"></span> Add Another Phone 
+                        </button>
 
+                        <button id="RemoveLastPhone" type="button" class="btn btn-default btn-sm pull-right">
+                            <span class="glyphicon glyphicon-remove"></span> Remove Last Phone 
+                        </button>
+
+                    </div>
                     <button type="submit" class="btn btn-default">Confirm</button>
                 </form>
             </div>

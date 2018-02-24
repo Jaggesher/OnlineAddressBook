@@ -25,7 +25,8 @@ namespace OnlineAddressBook.Models
 
         [StringLength(150, ErrorMessage = " Address cannot be longer than 150 characters.")]
         public String Address { get; set; }
-
+        
+        public List<PhoneViewModel> Phones { get; set; }
 
     }
 }

@@ -12,7 +12,7 @@ namespace OnlineAddressBook.Controllers
     {
         public Contact()
         {
-
+            
         }
 
         public IActionResult Index()
@@ -29,12 +29,15 @@ namespace OnlineAddressBook.Controllers
         [HttpPost]
         public IActionResult AddContact(PeopleViewModel model)
         {
-            if(!ModelState.IsValid){
+            
+            return Json(model);
 
-            }else{
-                return BadRequest();
+            if(!ModelState.IsValid){
+               return BadRequest(ModelState);
             }
-            return View();
+
+           return  Redirect ("AddContact");
+
         }
 
     }
