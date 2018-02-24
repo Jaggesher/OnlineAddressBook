@@ -7,6 +7,8 @@ $(document).ready(function() {
 
     $('#RemoveLastPhone').on('click', removeLastPhone);
 
+    $('#AllContactTable').DataTable();
+
     // $('#contactTable').DataTable();
 });
 

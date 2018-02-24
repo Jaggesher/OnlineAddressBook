@@ -8,5 +8,8 @@ namespace OnlineAddressBook.Services
     public interface IContactService
     {
         Task<bool> AddContactAsync(PeopleViewModel _newPeople, String userId);
+        
+        Task<IEnumerable<People>> GetAllContactsAsync(String userId);
+
     }
 }

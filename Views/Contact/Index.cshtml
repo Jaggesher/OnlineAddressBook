@@ -1,1 +1,68 @@
-<h1>OK</h1>
+@model AllContactViewModel
+@{
+    ViewData["Title"] = "All Contact";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<div class="row">
+    <br>
+    <div class="col-md-10 col-md-offset-1">
+        <div class="panel panel-default">
+            <div class="panel-heading">Your All Contact.</div>
+            <div class="panel-body">
+                <table id="AllContactTable" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Nick Name</th>
+                            <th>Address</th>
+                            <th>Phones</th>
+                            <th>Website</th>
+                            <th>Birth Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Nick Name</th>
+                            <th>Address</th>
+                            <th>Phones</th>
+                            <th>Website</th>
+                            <th>Birth Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach(People Contact in Model.MyContacts)
+                        {
+                            <tr>
+                                <td>@Contact.FullName </td>
+                                <td>@Contact.NickName</td>
+                                <td>
+                                    @foreach (var phone in Contact.Phones)
+                                        {
+                                            <p>@phone.Number</p>
+                                        }
+                                </td>
+                                <td>@Contact.Address</td>
+                                <td>@Contact.WebSite</td>
+                                <td>@Contact.BirthDate</td>
+                                <td></td>
+                            </tr>
+
+                        }
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

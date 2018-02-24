@@ -20,9 +20,18 @@ namespace OnlineAddressBook.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null) return Challenge();
+            var data = await _contactServices.GetAllContactsAsync(currentUser.Id); 
+            
+            var model = new AllContactViewModel()
+            {
+                MyContacts = data 
+            };
+
+            return View(model);
         }
 
         [HttpGet]
