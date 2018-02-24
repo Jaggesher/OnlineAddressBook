@@ -8,9 +8,9 @@ using OnlineAddressBook.Models;
 namespace OnlineAddressBook.Controllers
 {
     [Authorize]
-    public class Contract : Controller
+    public class Contact : Controller
     {
-        public Contract()
+        public Contact()
         {
 
         }
@@ -21,13 +21,13 @@ namespace OnlineAddressBook.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddContract()
+        public IActionResult AddContact()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddContract(PeopleViewModel model)
+        public IActionResult AddContact(PeopleViewModel model)
         {
             if(!ModelState.IsValid){
 
