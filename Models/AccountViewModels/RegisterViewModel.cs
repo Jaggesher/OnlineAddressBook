@@ -8,6 +8,12 @@ namespace OnlineAddressBook.Models.AccountViewModels
 {
     public class RegisterViewModel
     {
+
+        [Required]
+        [StringLength(20, ErrorMessage = "The {0} required and at most {1} characters long.")]
+        [Display(Name = "User Name")]
+        public String Name { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
