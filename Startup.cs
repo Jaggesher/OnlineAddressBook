@@ -35,6 +35,7 @@ namespace OnlineAddressBook
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IContactService, ContactService>();
 
             services.AddMvc();
         }
