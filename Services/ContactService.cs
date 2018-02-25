@@ -48,10 +48,11 @@ namespace OnlineAddressBook.Services
             return saveResult == entityCount;
 
         }
-
-        public async Task<IEnumerable<People>> GetAllContactsAsync(string userId)
+        
+        public async Task<IEnumerable<People>> GetAllContactsAsync(String userId)
         {
             return await _context.People.Where(x=> x.UserId == userId).Include(x => x.Phones).ToArrayAsync();
         }
+
     }
 }

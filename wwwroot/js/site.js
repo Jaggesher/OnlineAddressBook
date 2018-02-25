@@ -7,7 +7,8 @@ $(document).ready(function() {
 
     $('#RemoveLastPhone').on('click', removeLastPhone);
 
-    $('#AllContactTable').DataTable();
+    //$('#AllContactTable').DataTable();
+    $('#contactTable').dataTable();
 
     // $('#contactTable').DataTable();
 });

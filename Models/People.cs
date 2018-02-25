@@ -30,5 +30,9 @@ namespace OnlineAddressBook.Models
 
         public ICollection<Phone> Phones { get; set; }
 
+        public String DisplayName(){
+            return FullName+ "("+NickName+")";
+        }
+
     }
 }
