@@ -62,10 +62,22 @@ namespace OnlineAddressBook.Controllers
 
         }
 
-        [HttpPost]
+        [HttpGet]
 
-        public  IActionResult ViewPeople(Guid peopleId){
-            return Json(peopleId);
+        public async  Task<IActionResult> ViewContact(Guid peopleId){
+            var data = await _contactServices.GetPeople(peopleId);
+            if(data == null) return BadRequest (new { error = "Opps! We can not find any thing"});
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null) return Challenge();
+            if(currentUser.Id != data.UserId ) return BadRequest (new {error = "Opps! Access Denying"});
+            var model = new PeopleViewModel()
+            {
+                SinglePeople = data
+            };
+
+            //return Json(model);
+
+            return View(model);
         }
 
     }

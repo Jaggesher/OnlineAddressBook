@@ -11,5 +11,7 @@ namespace OnlineAddressBook.Services
         
         Task<IEnumerable<People>> GetAllContactsAsync(String userId);
 
+        Task<People> GetPeople(Guid peopleId);
+
     }
 }

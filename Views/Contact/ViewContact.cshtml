@@ -1,0 +1,85 @@
+@model PeopleViewModel
+@{
+    ViewData["Title"] = "View Contact";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<div class="row">
+    <br>
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">View contact.</div>
+            <div class="panel-body">
+                
+                <form asp-controller="Contact" asp-action=""  method="post">   
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="FullName"></label>
+                        <input asp-for="FullName" class="form-control"  value="@Model.SinglePeople.FullName"/>
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NickName"></label>
+                        <input asp-for="NickName" class="form-control" value="@Model.SinglePeople.NickName" />
+                        <span asp-validation-for="NickName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="BirthDate"></label>
+                        <input asp-for="BirthDate" class="form-control"  value="@Model.SinglePeople.BirthDate.Date.ToString("yyyy-MM-dd")"/>
+                        <span asp-validation-for="BirthDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Address"></label>
+                        <input asp-for="Address" class="form-control" value="@Model.SinglePeople.Address"/>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="WebSite"></label>
+                        <input asp-for="WebSite" class="form-control" value="@Model.SinglePeople.WebSite"/>
+                        <span asp-validation-for="WebSite" class="text-danger"></span>
+                    </div>
+                    
+                    <div id="MultiplePhones">
+
+                        @{
+                            var count=0;
+                        }
+    
+                            @foreach( var phone in Model.SinglePeople.Phones ) 
+                            {
+                                <div class="form-group">
+                                    <label for="Phones_@count">Phone</label>
+                                    <input class="form-control" type="text" data-val="true" data-val-maxlength="Phone Number cannot be longer than 20 characters." data-val-maxlength-max="20" id="Phones_@count" name="Phones[@count].Phone" value="@phone.Number" />
+                                    <span class="text-danger field-validation-valid" data-valmsg-for="Phones[@count].Phone" data-valmsg-replace="true"></span>
+                                </div>
+
+                            }
+                        
+                    </div>
+
+                    <div class="form-group">
+                        
+                        <button id="AddAnotherPhone" type="button" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-ok"></span> Add Another Phone 
+                        </button>
+
+                        <button id="RemoveLastPhone" type="button" class="btn btn-default btn-sm pull-right">
+                            <span class="glyphicon glyphicon-remove"></span> Remove Last Phone 
+                        </button>
+
+                    </div>
+                    <button type="submit" class="btn btn-default">Confirm</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

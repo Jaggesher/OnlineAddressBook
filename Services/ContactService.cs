@@ -54,5 +54,9 @@ namespace OnlineAddressBook.Services
             return await _context.People.Where(x=> x.UserId == userId).Include(x => x.Phones).ToArrayAsync();
         }
 
+        public async Task<People> GetPeople(Guid peopleId)
+        {
+            return await _context.People.Where(X => X.Id == peopleId).Include(X => X.Phones).SingleAsync();
+        }
     }
 }

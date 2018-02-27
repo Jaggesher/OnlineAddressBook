@@ -28,5 +28,7 @@ namespace OnlineAddressBook.Models
         
         public List<PhoneViewModel> Phones { get; set; }
 
+        public People SinglePeople { get; set; } // For edit purpose
+
     }
 }
