@@ -47,7 +47,13 @@
                                 <td>@Contact.Address</td>
                                 <td>@Contact.WebSite</td>
                                 <td>@Contact.BirthDate</td>
-                                <td></td>
+                                <td>
+                                   <form asp-controller="Contact" asp-action="ViewPeople"  method="post">
+                                        <button type="submit" class="btn btn-primary btn-sm" value="@Contact.Id" name="peopleId" data-toggle="tooltip" data-placement="bottom" title="View!">
+                                            <span class="glyphicon glyphicon-eye-open"></span>
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         }
 

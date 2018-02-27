@@ -11,6 +11,9 @@ $(document).ready(function() {
     $('#contactTable').dataTable();
 
     // $('#contactTable').DataTable();
+
+    $('[data-toggle="tooltip"]').tooltip();
+
 });
 
 function addAnotherPhone() {

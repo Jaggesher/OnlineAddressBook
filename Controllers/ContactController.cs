@@ -35,13 +35,13 @@ namespace OnlineAddressBook.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddContact()
+        public IActionResult AddContact() //Adding new contact view
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddContact(PeopleViewModel model)
+        public async Task<IActionResult> AddContact(PeopleViewModel model) // Adding new contact Save
         {
             
             //return Json(model);
@@ -60,6 +60,12 @@ namespace OnlineAddressBook.Controllers
 
             return BadRequest(new { error = "Could not add new Contact." });
 
+        }
+
+        [HttpPost]
+
+        public  IActionResult ViewPeople(Guid peopleId){
+            return Json(peopleId);
         }
 
     }
