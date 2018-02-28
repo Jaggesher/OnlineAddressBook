@@ -80,5 +80,12 @@ namespace OnlineAddressBook.Controllers
             return View(model);
         }
 
+
+        [HttpPost]
+        public IActionResult EditContact(PeopleViewModel model){
+        
+            return Json(model);
+        }
+
     }
 }
