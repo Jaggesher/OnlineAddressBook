@@ -58,5 +58,42 @@ namespace OnlineAddressBook.Services
         {
             return await _context.People.Where(X => X.Id == peopleId).Include(X => X.Phones).SingleAsync();
         }
+
+        public async Task<bool> SaveChanges(PeopleViewModel _oldPeople, Guid peopleId)
+        {
+            var contex = await _context.People.Where(X => X.Id == peopleId).SingleAsync();
+            contex.FullName = _oldPeople.FullName;
+            contex.NickName = _oldPeople.NickName;
+            contex.BirthDate = _oldPeople.BirthDate;
+            contex.WebSite = _oldPeople.WebSite;
+            contex.Address = _oldPeople.Address;
+            try{
+                await _context.SaveChangesAsync();
+                try{
+                    _context.Phone.Remove( await _context.Phone.Where(X => X.PeopleId == peopleId).FirstAsync());
+                    await _context.SaveChangesAsync();
+                    
+                    foreach(PhoneViewModel phoneNumber in _oldPeople.Phones){
+                        var NewPhone = new Phone 
+                        {
+                            Id = new Guid(),
+                            Number = phoneNumber.Phone,
+                            PeopleId = peopleId
+                        };
+
+                        _context.Phone.Add(NewPhone);
+                    }
+
+                    var saveResult = await _context.SaveChangesAsync();
+                    var entityCount = _oldPeople.Phones.Count;
+                    return saveResult == entityCount;
+                }catch{
+                    return false;
+                }
+            }catch{
+                return false;
+            }
+            throw new NotImplementedException();
+        }
     }
 }

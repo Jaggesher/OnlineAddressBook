@@ -13,5 +13,6 @@ namespace OnlineAddressBook.Services
 
         Task<People> GetPeople(Guid peopleId);
 
+        Task<bool> SaveChanges(PeopleViewModel _oldPeople, Guid peopleId);
     }
 }

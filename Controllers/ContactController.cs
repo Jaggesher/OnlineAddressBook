@@ -82,9 +82,23 @@ namespace OnlineAddressBook.Controllers
 
 
         [HttpPost]
-        public IActionResult EditContact(PeopleViewModel model){
-        
-            return Json(model);
+        public async Task<IActionResult> EditContact(PeopleViewModel model, Guid peopleId, String UserId){
+
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null) return Challenge();
+            if(currentUser.Id != UserId ) return BadRequest (new {error = "Opps! Access Denying"});
+            
+             if(!ModelState.IsValid){
+               return BadRequest(ModelState);
+            }
+            
+             var successful = await _contactServices.SaveChanges(model,peopleId);
+
+            //return Json(currentUser);
+            if(successful) return  Redirect ("Index");
+
+            return BadRequest(new { error = "Could not add new Contact." });
+            
         }
 
     }
