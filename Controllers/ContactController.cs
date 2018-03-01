@@ -57,7 +57,7 @@ namespace OnlineAddressBook.Controllers
             var successful = await _contactServices.AddContactAsync(model, currentUser.Id);
 
             //return Json(currentUser);
-            if (successful) return Redirect("AddContact");
+            if (successful) return Redirect("Index");
 
             return BadRequest(new { error = "Could not add new Contact." });
 
