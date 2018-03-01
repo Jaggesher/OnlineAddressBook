@@ -5,16 +5,23 @@ using System.Threading.Tasks;
 using OnlineAddressBook.Models;
 using OnlineAddressBook.Data;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+
 
 namespace OnlineAddressBook.Services
 {
     public class ContactService : IContactService
     {
         private readonly ApplicationDbContext _context;
-
-        public ContactService (ApplicationDbContext context)
+        private readonly IHostingEnvironment _hostingEnvironment;
+        public ContactService (ApplicationDbContext context , IHostingEnvironment hostingEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public async Task<bool> AddContactAsync(PeopleViewModel _newPeople, String userId)
@@ -47,6 +54,64 @@ namespace OnlineAddressBook.Services
             var entityCount = _newPeople.Phones.Count + 1;
             return saveResult == entityCount;
 
+        }
+
+        public async Task<MemoryStream> BuildCSV(AllContactViewModel data)
+        {
+
+            string sWebRootFolder = _hostingEnvironment.WebRootPath;
+            string sFileName = @"ContactList.xlsx";
+            FileInfo file = new FileInfo(Path.Combine(sWebRootFolder, sFileName));
+            var memory = new MemoryStream();
+            using (var fs = new FileStream(Path.Combine(sWebRootFolder, sFileName), FileMode.Create, FileAccess.Write))
+            {
+                IWorkbook workbook;
+                workbook = new XSSFWorkbook();
+                ISheet excelSheet = workbook.CreateSheet("ContactList");
+
+                IRow row = excelSheet.CreateRow(0);
+
+                row.CreateCell(0).SetCellValue("Full Name");
+                row.CreateCell(1).SetCellValue("Nick Name");
+                row.CreateCell(2).SetCellValue("Phone");
+                row.CreateCell(3).SetCellValue("Address");
+                row.CreateCell(4).SetCellValue("Website");
+                row.CreateCell(5).SetCellValue("Birth Date");
+
+                var i = 1;
+                foreach(People person in data.MyContacts)
+                {
+                    string phones = "";
+                    foreach (var phone in person.Phones)
+                    {
+                        phones += phone.Number.ToString()+" ";
+                    }
+
+                    row = excelSheet.CreateRow(i);
+                    row.CreateCell(0).SetCellValue(person.FullName);
+                    row.CreateCell(1).SetCellValue(person.NickName);
+                    row.CreateCell(2).SetCellValue(phones);
+                    row.CreateCell(3).SetCellValue(person.Address);
+                    row.CreateCell(4).SetCellValue(person.WebSite);
+                    row.CreateCell(5).SetCellValue(person.BirthDate.Date.ToString("yyyy/MM/dd"));
+
+                    i++;
+                }
+                
+                workbook.Write(fs);
+
+
+                using (var stream = new FileStream(Path.Combine(sWebRootFolder, sFileName), FileMode.Open))
+                {
+                    await stream.CopyToAsync(memory);
+                }
+                memory.Position = 0;
+
+            }
+
+            return memory;
+
+            throw new NotImplementedException();
         }
 
         public async Task<bool> DeleteIt(Guid peopleId)
@@ -102,7 +167,6 @@ namespace OnlineAddressBook.Services
             }catch{
                 return false;
             }
-            throw new NotImplementedException();
         }
     }
 }

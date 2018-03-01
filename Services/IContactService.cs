@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using OnlineAddressBook.Models;
+using System.IO;
 
 namespace OnlineAddressBook.Services
 {
@@ -16,5 +17,8 @@ namespace OnlineAddressBook.Services
         Task<bool> SaveChanges(PeopleViewModel _oldPeople, Guid peopleId);
 
         Task<bool> DeleteIt(Guid peopleId);
+
+        Task<MemoryStream> BuildCSV(AllContactViewModel data);
+
     }
 }

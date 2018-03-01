@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineAddressBook.Models;
 using OnlineAddressBook.Services;
 using Microsoft.AspNetCore.Identity;
+using System.IO;
 
 namespace OnlineAddressBook.Controllers
 {
@@ -111,14 +112,33 @@ namespace OnlineAddressBook.Controllers
 
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser == null) return Challenge();
-            
-             var successful = await _contactServices.DeleteIt( peopleId);
+
+            var successful = await _contactServices.DeleteIt(peopleId);
 
             //return Json(currentUser);
             if (successful) return Redirect("Index");
 
             return BadRequest(new { error = "Opps!! We can't find any thing." });
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DownloadCSV()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null) return Challenge();
+            var data = await _contactServices.GetAllContactsAsync(currentUser.Id);
+
+            var model = new AllContactViewModel()
+            {
+                MyContacts = data
+            };
+
+            var memory = new MemoryStream();
+
+            memory = await _contactServices.BuildCSV(model);
+            
+            return File(memory, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", @"ContactList.xlsx");
         }
 
     }

@@ -7,6 +7,9 @@
 <hr />
 <div class="row">
     <br>
+
+   
+
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">Your All Contact.</div>
@@ -67,6 +70,14 @@
                 </table>
             </div>
         </div>
+    </div>
+    <hr/>
+    <div class="col-md-12 text-center">
+        <form asp-controller="Contact" asp-action="DownloadCSV"  method="post">
+            <button type="submit" class="btn btn-success btn-sm "  data-toggle="tooltip" data-placement="bottom" title="Download!">
+                DownloadCSV  <span class="glyphicon glyphicon-save"></span>
+            </button>
+        </form>
     </div>
 </div>
 
