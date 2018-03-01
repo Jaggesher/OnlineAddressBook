@@ -48,7 +48,16 @@ namespace OnlineAddressBook.Services
             return saveResult == entityCount;
 
         }
-        
+
+        public async Task<bool> DeleteIt(Guid peopleId)
+        {
+            _context.People.Remove(await _context.People.FindAsync(peopleId));
+
+            var result = await _context.SaveChangesAsync();
+
+            return result == 1;
+        }
+
         public async Task<IEnumerable<People>> GetAllContactsAsync(String userId)
         {
             return await _context.People.Where(x=> x.UserId == userId).Include(x => x.Phones).ToArrayAsync();
