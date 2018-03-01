@@ -46,7 +46,7 @@
                                 </td>
                                 <td>@Contact.Address</td>
                                 <td>@Contact.WebSite</td>
-                                <td>@Contact.BirthDate</td>
+                                <td>@Contact.BirthDate.Date.ToString("dd/MM/yyyy")</td>
                                 <td>
                                    <form asp-controller="Contact" asp-action="ViewContact"  method="get">
                                         <button type="submit" class="btn btn-primary btn-sm" value="@Contact.Id" name="peopleId" data-toggle="tooltip" data-placement="bottom" title="View!">

@@ -61,17 +61,17 @@ namespace OnlineAddressBook.Services
 
         public async Task<bool> SaveChanges(PeopleViewModel _oldPeople, Guid peopleId)
         {
-            var contex = await _context.People.Where(X => X.Id == peopleId).SingleAsync();
+            var contex = await _context.People.Where(X => X.Id == peopleId).Include(X => X.Phones ).SingleAsync();
             contex.FullName = _oldPeople.FullName;
             contex.NickName = _oldPeople.NickName;
             contex.BirthDate = _oldPeople.BirthDate;
             contex.WebSite = _oldPeople.WebSite;
             contex.Address = _oldPeople.Address;
+            contex.Phones.Clear();
+
             try{
                 await _context.SaveChangesAsync();
                 try{
-                    _context.Phone.Remove( await _context.Phone.Where(X => X.PeopleId == peopleId).FirstAsync());
-                    await _context.SaveChangesAsync();
                     
                     foreach(PhoneViewModel phoneNumber in _oldPeople.Phones){
                         var NewPhone = new Phone 
